@@ -1,14 +1,31 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { Link ,useNavigate} from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 // use react-router Link or NavLink
-const Link = <a />;
+
+
 
 const Navbar = () => {
+
+let navigate=useNavigate();
+
+ const {isAuth,logout} = useContext(AuthContext)
+
+  const onClickLogin=()=>{
+   if(isAuth){
+     logout()
+   }
+   else{
+    navigate('/login')
+   }
+  }
+
+  
   return (
     <div data-cy="navbar">
-      <Link data-cy="navbar-home-link"></Link>
+      <Link to='\' data-cy="navbar-home-link">Logo</Link>
       <span data-cy="navbar-cart-items-count">{/* count here */}</span>
-      <button data-cy="navbar-login-logout-button"></button>
+      <button onClick={onClickLogin}  data-cy="navbar-login-logout-button">{isAuth?'Logout':'Login'}</button>
     </div>
   );
 };
